@@ -1,40 +1,38 @@
 #!/bin/bash
 
-SRC="~/go/src/bitbucket.org/applysquare/applysquare-go"
-TIME=`date +"%Y%m"`
-ALPHA1="alpha_1_$TIME" 
-ALPHA2="alpha_2_$TIME" 
-BRANCH=$1
+SRC="~/www/teaching"
+ALPHA="alpha_$1"
 
-echo "[AutoMerge AI]"
-echo "[AutoMerge AI]进入go代码目录，自动清理环境"
-cd ~/go/src/bitbucket.org/applysquare/applysquare-go
-git reset --hard
-git clean -df
+echo "\033[32m[--- 进入teaching代码目录，自动清理环境 ---]\033[0m"
+cd SRC
+#git reset --hard
+#git clean -df
 
-echo "[AutoMerge AI] 获取目标代码"
+echo "\033[32m[--- 切换到目标代码分支 ---]\033[0m"
 git checkout $2
-git pull
+git add .
+git commit -a
+git pull origin $ALPHA
+git push origin $2
 
-if [[ $1 == 1 ]] ; then
-    git checkout $ALPHA1
-fi
-
-if [[ $1 == 2 ]] ; then
-    git checkout $ALPHA2
-fi
-
+echo "\033[32m[--- 切换到测试代码分支 自动清理环境 ---]\033[0m"
+git checkout $ALPHA
 git reset --hard
 git clean -df
 
-echo "[AutoMerge AI] 更新远程代码"
-git pull 
-echo "Merge Branch"
+echo "\033[32m[--- 拉取远程代码 origin/$ALPHA --->>> $ALPHA ---]\033[0m"
+git pull origin $ALPHA
 
-echo "[AutoMerge AI] 合并"
+echo "\033[32m[---  合并$2 --->>> $ALPHA ---]\033[0m"
 git merge $2
 
-echo "[AutoMerge AI] 推送"
-git push
-echo "[AutoMerge AI]"
+echo "\033[32m[--- 推送$ALPHA --->>> origin/$ALPHA ---]\033[0m"
+git push origin $ALPHA
 
+git checkout $2
+echo "\033[32m[--- OK ---]\033[0m"
+
+if [[ -n $3 && $3 = '-d' ]];then
+    echo
+    sh origin-deploy.sh $ALPHA alpha $2
+fi
