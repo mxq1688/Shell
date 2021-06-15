@@ -25,16 +25,17 @@ echo '\033[32m-----------------while--------------------\033[0m'
 
 #while
     i=1
-    # []  (())区别是(())可以使用>  <  符号
+    # []  (())区别是(())可以使用><符号  []两边要有空格
     while(( $i<=3 ))   #or while [ $i -gt 3 ]
     do
         echo $i
-        let "i++"
+        let i++
     done
 
+    # 读取文件
     while read line;do
         echo $line
-    done </etc/hosts
+    done <./read.txt
 
 #无线循环
 #    while :  #or while true   or for (( ; ; ))
@@ -49,7 +50,7 @@ echo '\033[32m-----------------while--------------------\033[0m'
 #done
 
 
-echo '\033[32m-----------------case--------------------\033[0m'
+echo '\033[32m-----------------case 获取用户输入--------------------\033[0m'
 
 #case
     echo '输入 1 到 4 之间的数字:'

@@ -4,6 +4,7 @@
     多行注释
 EOF
 # sh -n m.sh 检查脚本是否错误
+#同一行多个命令要加;
 
 echo -e '\033[32m-------------------------------------\033[0m'
 
@@ -37,6 +38,20 @@ echo -e '\033[32m-------------------------------------\033[0m'
     echo ${arr[0]}
     echo ${arr[@]} #or ${arr[*]}
     #获取数组元素个数
-    echo ${#arr[@]} #or ${arr[*]}
+    echo ${#arr[@]} #or ${#arr[*]}
     #获取数组单个元素的长度
     echo ${#arr[1]}
+
+    # 数组遍历
+        for p in ${arr[*]};do 
+        done
+
+        for((i=0;i<${#arr[*]};i++));do
+        done
+
+
+
+# 获取当前文件路径
+echo $(pwd)
+echo $(dirname $0) # echo `dirname $0`
+echo $(cd $(dirname $0); pwd)
